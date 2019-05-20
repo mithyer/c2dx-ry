@@ -8,36 +8,27 @@
 #ifndef RYComponent_hpp
 #define RYComponent_hpp
 
-#include "c2d-ry-util.h"
-#include "RYRef.hpp"
+#include "ccry-util.h"
+
+#define RY_COMPONENT_ID_DECLARE(__ID__)  public: constexpr static RYComponentId __ID__ = "RYComponentId_"#__ID__;
 
 RY_NAMESPACE_BEGIN
+
+typedef const char* RYComponentId;
 
 class RYEntity;
 class RYSystem;
 
-struct RYComponentIdentifier {
-    
-    CC_PROPERTY_READONLY_PASS_BY_REF(std::string, _name, Name)
-    
-public:
-    
-    RYComponentIdentifier(const std::string& name) {
-        _name = name;
-    };
-
-};
-
-class RYComponent: public RYRef {
+class RYComponent: public cocos2d::Ref {
 
 friend class RYEntity;
 friend class RYSystem;
 
 public:
-    
-    RY_CREATE_FUNC(RYComponent);
-    
+        
     virtual RYEntity *getEntity();
+    
+    CC_PROPERTY_READONLY_PASS_BY_REF(std::string, _identifier, Identifier);
     
 protected:
     

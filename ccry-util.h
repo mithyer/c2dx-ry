@@ -9,9 +9,7 @@
 #define c2d_ry_util_h
 
 #include <cocos2d.h>
-#include <string>
-#include <vector>
-#include <map>
+#include <stdio.h>
 
 #define RY_NAMESPACE ccry
 
@@ -30,6 +28,27 @@
 #define RY_ASSERT_FAILURE(MSG) cocos2d::log(MSG);assert(0);
 
 #endif
+
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
+#define RY_CREATE_FUNC(__TYPE__) \
+static __TYPE__* create() \
+{ \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+    if (pRet) \
+    {\
+    pRet->autorelease()\
+    pRet->setTypeName(STR(RY_NAMESPACE)"_"#__TYPE__);\
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = nullptr; \
+        return nullptr; \
+    } \
+}
 
 RY_NAMESPACE_BEGIN
 

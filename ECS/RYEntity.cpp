@@ -9,18 +9,19 @@
 
 RY_NAMESPACE_BEGIN
 
-void RYEntity::addComponent(RYComponent *cmp, const RYComponentIdentifier& identifier) {
+void RYEntity::addComponent(RYComponent *cmp, RYComponentId identifier) {
     
-    auto name = identifier.getName();
+    std::string name(identifier);
     RY_ASSERT(!RY_MAP_HAS_VALUE(_cmpMap, name), "same cmp exist");
     RY_ASSERT(cmp->_entity == nullptr, "cmp entity isn't null");
     _cmpMap[name] = cmp;
+    cmp->_identifier = name;
     cmp->setEntity(this);
 };
 
-RYComponent *RYEntity::component(const RYComponentIdentifier& identifier) {
+RYComponent *RYEntity::component(RYComponentId identifier) {
     
-    auto res = _cmpMap.find(identifier.getName());
+    auto res = _cmpMap.find(identifier);
     if (res != _cmpMap.end()) {
         auto value = res->second;
         RY_ASSERT(RY_REF_EXIST(value), "WTF")

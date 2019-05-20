@@ -30,16 +30,12 @@ void RYComponent::setEntity(RYEntity *entity) {
 }
 
 RYEntity *RYComponent::getEntity() {
-    
-    if (nullptr == _entity) {
-        return nullptr;
-    }
-    
-    if (!RY_REF_EXIST(_entity)) {
-        _entity = nullptr;
-    }
     return _entity;
 };
 
+
+const std::string& RYComponent::getIdentifier() const {
+    return _identifier;
+}
 
 RY_NAMESPACE_END

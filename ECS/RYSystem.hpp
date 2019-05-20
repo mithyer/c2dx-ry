@@ -8,21 +8,20 @@
 #ifndef RYSystem_hpp
 #define RYSystem_hpp
 
-#include "c2d-ry-util.h"
-
 #include "RYEntity.hpp"
 #include "RYComponent.hpp"
 
-#define RY_CREATE_SYSTEM_FUNC(__TYPE__, __CMP__) \
-static __TYPE__* create() \
+
+#define RY_CREATE_SYSTEM_FUNC(__SYSCLS__, __CMPCLS__) \
+static __SYSCLS__* create() \
 { \
-    __CMP__ *cmp; \
+    __CMPCLS__ *cmp; \
     cmp = nullptr; \
-    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+    __SYSCLS__ *pRet = new(std::nothrow) __SYSCLS__(); \
     if (pRet) \
     {\
-        pRet->setTypeName(#__TYPE__);\
-        pRet->_componentTypeName = #__CMP__\
+        pRet->setTypeName(#__SYSCLS__);\
+        pRet->_componentTypeName = #__CMPCLS__\
         return pRet; \
     } \
     else \
@@ -35,7 +34,7 @@ static __TYPE__* create() \
 
 RY_NAMESPACE_BEGIN
 
-class RYSystem: public RYRef {
+class RYSystem: public cocos2d::Ref {
     
 public:
     
@@ -43,11 +42,12 @@ public:
     
     virtual void update(double dt);
     
+    ~RYSystem();
+    
 protected:
     
     std::string _componentTypeName;
     std::vector<RYComponent *> _components;
-    
 };
 
 RY_NAMESPACE_END

@@ -8,11 +8,15 @@
 #ifndef RYEventCenter_hpp
 #define RYEventCenter_hpp
 
-#include <stdio.h>
-#include <cocos2d.h>
+
+#include "ccry-util.h"
+
+#define RY_EVENT_NAME_DECLARE(__EVENT__)  public: constexpr static RYEventName __EVENT__ = "RYEventName_"#__EVENT__;
+
+
+RY_NAMESPACE_BEGIN
 
 typedef const char* RYEventName;
-#define RY_EVENT_CREATE(__EVENT__)  public: static RYEventName __EVENT__ = #__EVENT__;
 
 typedef const std::unordered_map<std::string, void *>& RYEventUserInfo;
 
@@ -41,5 +45,6 @@ protected:
     //std::unordered_map<RYEventName, std::unordered_map<RYEventObserver, RYEvent *> *> _eventMap;
 };
 
+RY_NAMESPACE_END
 
 #endif /* RYEventCenter_hpp */

@@ -8,24 +8,22 @@
 #ifndef RYEntity_hpp
 #define RYEntity_hpp
 
-#include "c2d-ry-util.h"
 #include "RYComponent.hpp"
+
 
 RY_NAMESPACE_BEGIN
 
 class RYSystem;
 
-class RYEntity: public RYRef {
+class RYEntity: public cocos2d::Ref {
         
     friend class RYSystem;
     
 public:
+        
+    virtual void addComponent(RYComponent *cmp, RYComponentId identifier);
     
-    RY_CREATE_FUNC(RYComponent);
-    
-    virtual void addComponent(RYComponent *cmp, const RYComponentIdentifier& identifier);
-    
-    virtual RYComponent *component(const RYComponentIdentifier& identifier);
+    virtual RYComponent *component(RYComponentId identifier);
     
     
 private:

@@ -7,6 +7,9 @@
 
 #include "RYEventCenter.hpp"
 
+
+RY_NAMESPACE_BEGIN
+
 static RYEventCenter *s_eventCenter = nullptr;
 
 RYEventCenter *RYEventCenter::getInstance() {
@@ -53,3 +56,5 @@ void RYEventCenter::removeEvent(RYEventObserver observer) {
     
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(observer);
 }
+
+RY_NAMESPACE_END
