@@ -17,7 +17,7 @@
 
 #define RY_NAMESPACE_BEGIN namespace RY_NAMESPACE {
 #define RY_NAMESPACE_END };
-
+#define RY_USING_NAMESPACE using namespace RY_NAMESPACE
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 

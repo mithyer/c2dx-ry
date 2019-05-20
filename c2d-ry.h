@@ -14,7 +14,7 @@
 #include "RYComponent.hpp"
 #include "RYEntity.hpp"
 #include "RYSystem.hpp"
-#include "RYEvent.hpp"
+#include "RYEventCenter.hpp"
 
 
 #endif /* c2d_ry_h */
