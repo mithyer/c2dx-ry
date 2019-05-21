@@ -18,15 +18,11 @@
 #define RY_USING_NAMESPACE using namespace RY_NAMESPACE
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-
 #define RY_ASSERT(CON, MSG)
 #define RY_ASSERT_FAILURE(MSG)
-
 #else
-
 #define RY_ASSERT(CON, MSG) if (!(CON)) {cocos2d::log(MSG);assert(0);};
 #define RY_ASSERT_FAILURE(MSG) cocos2d::log(MSG);assert(0);
-
 #endif
 
 #define STR_EXPAND(tok) #tok
@@ -38,8 +34,8 @@ static __TYPE__* create() \
     __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
     if (pRet) \
     {\
-    pRet->autorelease()\
-    pRet->setTypeName(STR(RY_NAMESPACE)"_"#__TYPE__);\
+        pRet->autorelease();\
+        pRet->setTypeName(STR(RY_NAMESPACE)"_"#__TYPE__);\
         return pRet; \
     } \
     else \
@@ -74,10 +70,6 @@ public:
 RY_NAMESPACE_END
 
 #define RY_REF_EXIST(REF) isRefExist(REF)
-
-#define RY_MAP_HAS_VALUE(MAP, KEY) RY_NAMESPACE::Util::mapHasValue(MAP, KEY)
-#define RY_MAP_GET_VALUE_SAFE(MAP, KEY) RY_NAMESPACE::Util::mapGetValueSafe(MAP, KEY)
-#define RY_MAP_GET_ALL_KEYS (MAP, KEY) RY_NAMESPACE::Util::mapGetAllKeys(MAP)
-#define RY_MAP_GET_ALL_VALUES (MAP, KEY) RY_NAMESPACE::Util::mapGetAllValues(MAP, KEY)
+#define RY_UTIL RY_NAMESPACE::Util
 
 #endif /* c2d_ry_util_h */

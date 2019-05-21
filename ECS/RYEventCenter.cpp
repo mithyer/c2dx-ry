@@ -26,11 +26,11 @@ RYEventCenter *RYEventCenter::getInstance() {
     return s_eventCenter;
 }
 
-RYEventObserver RYEventCenter::addObserver(RYEventName eventName, const std::function<void(RYEventUserInfo)>& callback, int priority) {
+RYEventObserver addObserver(RYEvent::EventName eventName, const std::function<void(RYEvent *)>& callback, int priority = 1) {
 
-    cocos2d::EventListener *listener = cocos2d::EventListenerCustom::create(std::string("RYEventCenter.") + eventName, [&](cocos2d::EventCustom *ccEvent) {
-        auto userInfo = static_cast<std::unordered_map<std::string, void *> *>(ccEvent->getUserData());
-        callback(*userInfo);
+    cocos2d::EventListener *listener = cocos2d::EventListenerCustom::create(eventName, [&](cocos2d::EventCustom *ccEvent) {
+        auto event = static_cast<RYEvent *>(ccEvent->getUserData());
+        callback(event);
     });
     
     cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, priority);
@@ -38,16 +38,20 @@ RYEventObserver RYEventCenter::addObserver(RYEventName eventName, const std::fun
     return listener;
 }
 
-void RYEventCenter::postEvent(RYEventName eventName, RYEventUserInfo userInfo) {
+void RYEventCenter::postEvent(RYEvent *event) {
     
-
-    cocos2d::EventCustom ccEvent(std::string("RYEventCenter.") + eventName);
-    ccEvent.setUserData((void *)&userInfo);
+    auto eventName = event->_eventName;
+    RY_ASSERT(eventName.size() > 0, "event has no name");
     
+    cocos2d::EventCustom ccEvent(eventName);
+    ccEvent.setUserData(event);
+    
+    event->retain();
     cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&ccEvent);
+    event->release();
 }
 
-void RYEventCenter::removeEvents(RYEventName eventName) {
+void RYEventCenter::removeEvents(RYEvent::EventName eventName) {
     
     cocos2d::Director::getInstance()->getEventDispatcher()->removeCustomEventListeners(eventName);
 }

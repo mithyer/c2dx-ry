@@ -22,6 +22,7 @@ static __SYSCLS__* create() \
     {\
         pRet->setTypeName(#__SYSCLS__);\
         pRet->_componentTypeName = #__CMPCLS__\
+        pRet->autorelease();\
         return pRet; \
     } \
     else \

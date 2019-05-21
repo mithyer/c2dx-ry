@@ -26,7 +26,7 @@ public:
     virtual RYComponent *component(RYComponentId identifier);
     
     
-private:
+protected:
     
     std::map<std::string, RYComponent*> _cmpMap;
     

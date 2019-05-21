@@ -10,15 +10,12 @@
 
 
 #include "ccry-util.h"
-
-#define RY_EVENT_NAME_DECLARE(__EVENT__)  public: constexpr static RYEventName __EVENT__ = "RYEventName_"#__EVENT__;
+#include "RYEvent.hpp"
 
 
 RY_NAMESPACE_BEGIN
 
-typedef const char* RYEventName;
-
-typedef const std::unordered_map<std::string, void *>& RYEventUserInfo;
+class RYEvent;
 
 typedef cocos2d::EventListener *RYEventObserver;
 
@@ -30,11 +27,11 @@ public:
     
     static RYEventCenter *getInstance();
     
-    RYEventObserver addObserver(RYEventName eventName, const std::function<void(RYEventUserInfo)>& callback, int priority = 1);
+    RYEventObserver addObserver(RYEvent::EventName eventName, const std::function<void(RYEvent *)>& callback, int priority = 1);
     
-    void postEvent(RYEventName eventName, RYEventUserInfo userInfo);
+    void postEvent(RYEvent *event);
 
-    void removeEvents(RYEventName eventName);
+    void removeEvents(RYEvent::EventName eventName);
     
     void removeEvent(RYEventObserver observer);
     
