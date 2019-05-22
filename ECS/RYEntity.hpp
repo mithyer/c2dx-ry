@@ -1,34 +1,34 @@
 //
-//  RYEntity.hpp
+//  Entity.hpp
 //  Vendor
 //
 //  Created by ray on 2019/5/16.
 //
 
-#ifndef RYEntity_hpp
-#define RYEntity_hpp
+#ifndef Entity_hpp
+#define Entity_hpp
 
 #include "RYComponent.hpp"
 
 
 RY_NAMESPACE_BEGIN
 
-class RYSystem;
+class System;
 
-class RYEntity: public cocos2d::Ref {
+class Entity: public cocos2d::Ref {
         
-    friend class RYSystem;
+    friend class System;
     
 public:
         
-    virtual void addComponent(RYComponent *cmp, RYComponentId identifier);
+    virtual void addComponent(Component *cmp, ComponentId identifier);
     
-    virtual RYComponent *component(RYComponentId identifier);
+    virtual Component *component(ComponentId identifier);
     
     
 protected:
     
-    std::map<std::string, RYComponent*> _cmpMap;
+    std::map<std::string, Component*> _cmpMap;
     
 
 };
@@ -37,4 +37,4 @@ RY_NAMESPACE_END
 
 
 
-#endif /* RYEntity_hpp */
+#endif /* Entity_hpp */

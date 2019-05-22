@@ -1,52 +1,52 @@
 //
-//  RYComponent.hpp
+//  Component.hpp
 //  Vendor
 //
 //  Created by ray on 2019/5/17.
 //
 
-#ifndef RYComponent_hpp
-#define RYComponent_hpp
+#ifndef Component_hpp
+#define Component_hpp
 
 #include "ccry-util.h"
 
-#define RY_COMPONENT_ID_DECLARE(__ID__)  public: constexpr static RYComponentId __ID__ = "RYComponentId_"#__ID__;
+#define RY_COMPONENT_ID_DECLARE(__ID__)  public: constexpr static ComponentId __ID__ = "ComponentId_"#__ID__;
 
 RY_NAMESPACE_BEGIN
 
-typedef const char* RYComponentId;
+typedef const char* ComponentId;
 
-class RYEntity;
-class RYSystem;
+class Entity;
+class System;
 
-class RYComponent: public cocos2d::Ref {
+class Component: public cocos2d::Ref {
 
-friend class RYEntity;
-friend class RYSystem;
+friend class Entity;
+friend class System;
 
 public:
         
-    virtual RYEntity *getEntity();
+    virtual Entity *getEntity();
     
     CC_PROPERTY_READONLY_PASS_BY_REF(std::string, _identifier, Identifier);
     
 protected:
     
-    RYComponent();
+    Component();
     
-    virtual ~RYComponent();
+    virtual ~Component();
 
-    virtual void setEntity(RYEntity *);
+    virtual void setEntity(Entity *);
     
     bool _needDestroy;
     
 private:
     
-    RYEntity *_entity;
+    Entity *_entity;
 };
     
     
     
 RY_NAMESPACE_END
 
-#endif /* RYComponent_hpp */
+#endif /* Component_hpp */

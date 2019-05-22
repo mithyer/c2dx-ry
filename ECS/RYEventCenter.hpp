@@ -15,29 +15,31 @@
 
 RY_NAMESPACE_BEGIN
 
-class RYEvent;
+class Event;
 
-typedef cocos2d::EventListener *RYEventObserver;
+typedef cocos2d::EventListener *EventObserver;
 
-class RYEvent;
+class Event;
 
-class RYEventCenter {
+class EventCenter {
     
 public:
     
-    static RYEventCenter *getInstance();
+    static EventCenter *getInstance();
     
-    RYEventObserver addObserver(RYEvent::EventName eventName, const std::function<void(RYEvent *)>& callback, int priority = 1);
+    EventObserver addObserver(EventName eventName, const std::function<void(Event *)>& callback, int priority = 1);
     
-    void postEvent(RYEvent *event);
+    void postEvent(Event *event);
 
-    void removeEvents(RYEvent::EventName eventName);
+    void removeEvents(EventName eventName);
     
-    void removeEvent(RYEventObserver observer);
+    void removeEvent(EventObserver observer);
     
 protected:
     
-    RYEventCenter();
+    EventCenter();
+    
+    static void initCenter();
     
     //std::unordered_map<RYEventName, std::unordered_map<RYEventObserver, RYEvent *> *> _eventMap;
 };

@@ -1,5 +1,5 @@
 //
-//  CCRYEntity.cpp
+//  CCEntity.cpp
 //  Vendor
 //
 //  Created by ray on 2019/5/16.
@@ -9,7 +9,7 @@
 
 RY_NAMESPACE_BEGIN
 
-void RYEntity::addComponent(RYComponent *cmp, RYComponentId identifier) {
+void Entity::addComponent(Component *cmp, ComponentId identifier) {
     
     std::string name(identifier);
     RY_ASSERT(!RY_MAP_HAS_VALUE(_cmpMap, name), "same cmp exist");
@@ -19,7 +19,7 @@ void RYEntity::addComponent(RYComponent *cmp, RYComponentId identifier) {
     cmp->setEntity(this);
 };
 
-RYComponent *RYEntity::component(RYComponentId identifier) {
+Component *Entity::component(ComponentId identifier) {
     
     auto res = _cmpMap.find(identifier);
     if (res != _cmpMap.end()) {

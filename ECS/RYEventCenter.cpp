@@ -10,26 +10,25 @@
 
 RY_NAMESPACE_BEGIN
 
-static RYEventCenter *s_eventCenter = nullptr;
+static EventCenter *s_eventCenter = nullptr;
 
-RYEventCenter *RYEventCenter::getInstance() {
+void EventCenter::initCenter() {
+    s_eventCenter = new EventCenter();
+}
+
+EventCenter *EventCenter::getInstance() {
     
+    static std::once_flag flag;
     if (nullptr == s_eventCenter) {
-        static std::mutex mutext;
-        mutext.lock();
-        if (nullptr == s_eventCenter) {
-            s_eventCenter = new RYEventCenter();
-            cocos2d::Director::getInstance()->getEventDispatcher();
-        }
-        mutext.unlock();
+        std::call_once(flag, initCenter);
     }
     return s_eventCenter;
 }
 
-RYEventObserver addObserver(RYEvent::EventName eventName, const std::function<void(RYEvent *)>& callback, int priority = 1) {
+EventObserver addObserver(EventName eventName, const std::function<void(Event *)>& callback, int priority = 1) {
 
     cocos2d::EventListener *listener = cocos2d::EventListenerCustom::create(eventName, [&](cocos2d::EventCustom *ccEvent) {
-        auto event = static_cast<RYEvent *>(ccEvent->getUserData());
+        auto event = static_cast<Event *>(ccEvent->getUserData());
         callback(event);
     });
     
@@ -38,7 +37,7 @@ RYEventObserver addObserver(RYEvent::EventName eventName, const std::function<vo
     return listener;
 }
 
-void RYEventCenter::postEvent(RYEvent *event) {
+void EventCenter::postEvent(Event *event) {
     
     auto eventName = event->_eventName;
     RY_ASSERT(eventName.size() > 0, "event has no name");
@@ -51,12 +50,12 @@ void RYEventCenter::postEvent(RYEvent *event) {
     event->release();
 }
 
-void RYEventCenter::removeEvents(RYEvent::EventName eventName) {
+void EventCenter::removeEvents(EventName eventName) {
     
     cocos2d::Director::getInstance()->getEventDispatcher()->removeCustomEventListeners(eventName);
 }
 
-void RYEventCenter::removeEvent(RYEventObserver observer) {
+void EventCenter::removeEvent(EventObserver observer) {
     
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(observer);
 }

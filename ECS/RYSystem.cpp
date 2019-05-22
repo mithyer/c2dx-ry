@@ -10,7 +10,7 @@
 RY_NAMESPACE_BEGIN
 
 
-void RYSystem::addComponentsInEntity(RYEntity *entity) {
+void System::addComponentsInEntity(Entity *entity) {
     for (auto pair : entity->_cmpMap) {
         auto cmp = pair.second;
         if (cmp->getTypeName() == _componentTypeName) {
@@ -22,7 +22,7 @@ void RYSystem::addComponentsInEntity(RYEntity *entity) {
     }
 }
 
-void RYSystem::update(double dt) {
+void System::update(double dt) {
     
     for (auto it = _components.rbegin(); it != _components.rend(); ++it) {
         auto cmp = *it;
@@ -33,7 +33,7 @@ void RYSystem::update(double dt) {
     }
 }
 
-RYSystem::~RYSystem() {
+System::~System() {
     for (auto cmp : _components) {
         cmp->release();
     }

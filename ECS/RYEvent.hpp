@@ -10,13 +10,13 @@
 
 #include "ccry-util.h"
 
-#define RY_EVENT_CREATE_FUNC(__CLS__)  public: constexpr static RYEvent::EventName name = "RYEventName_"#__CLS__;\
+#define RY_EVENT_CREATE_FUNC(__CLS__)  public: constexpr static ccry::EventName Name = "RYEventName_"#__CLS__;\
 static __CLS__* create() \
 { \
     __CLS__ *pRet = new(std::nothrow) __CLS__(); \
     if (pRet) \
     {\
-        pRet->_eventName = __CLS__::EventName;\
+        pRet->_eventName = __CLS__::Name;\
         pRet->setTypeName(#__CLS__);\
         pRet->autorelease();\
         return pRet; \
@@ -31,14 +31,14 @@ static __CLS__* create() \
 
 RY_NAMESPACE_BEGIN
 
+typedef const char* EventName;
 
-class RYEvent: public cocos2d::Ref {
+class Event: public cocos2d::Ref {
     
 public:
     
-    typedef const char* EventName;
 
-    friend class RYEventCenter;
+    friend class EventCenter;
     
 protected:
     

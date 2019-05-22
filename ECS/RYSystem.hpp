@@ -35,20 +35,21 @@ static __SYSCLS__* create() \
 
 RY_NAMESPACE_BEGIN
 
-class RYSystem: public cocos2d::Ref {
+class System: public cocos2d::Ref {
     
 public:
     
-    virtual void addComponentsInEntity(RYEntity *entity);
+    virtual void addComponentsInEntity(Entity *entity);
     
     virtual void update(double dt);
     
-    ~RYSystem();
     
 protected:
     
+    ~System();
+    
     std::string _componentTypeName;
-    std::vector<RYComponent *> _components;
+    std::vector<Component *> _components;
 };
 
 RY_NAMESPACE_END

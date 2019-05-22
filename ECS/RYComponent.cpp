@@ -1,5 +1,5 @@
 //
-//  CCRYComponent.cpp
+//  CCComponent.cpp
 //  Vendor
 //
 //  Created by ray on 2019/5/17.
@@ -11,30 +11,30 @@
 RY_NAMESPACE_BEGIN
 
 
-RYComponent::RYComponent():
+Component::Component():
 _entity(nullptr) {
     
 };
 
-RYComponent::~RYComponent() {
+Component::~Component() {
     if (nullptr != _entity) {
         RY_ASSERT(RY_REF_EXIST(_entity), "WTF")
         _entity->release();
     }
 };
 
-void RYComponent::setEntity(RYEntity *entity) {
+void Component::setEntity(Entity *entity) {
     RY_ASSERT(nullptr == _entity, "has entity");
     _entity = entity;
     _entity->retain();
 }
 
-RYEntity *RYComponent::getEntity() {
+Entity *Component::getEntity() {
     return _entity;
 };
 
 
-const std::string& RYComponent::getIdentifier() const {
+const std::string& Component::getIdentifier() const {
     return _identifier;
 }
 
