@@ -10,7 +10,6 @@
 
 #include "ccry-util.h"
 
-#define RY_COMPONENT_ID_DECLARE(__ID__)  public: constexpr static ComponentId __ID__ = "ComponentId_"#__ID__;
 
 RY_NAMESPACE_BEGIN
 
@@ -28,7 +27,7 @@ public:
         
     virtual Entity *getEntity();
     
-    CC_PROPERTY_READONLY_PASS_BY_REF(std::string, _identifier, Identifier);
+    CC_PROPERTY_READONLY(ComponentId, _identifier, Identifier);
     
 protected:
     

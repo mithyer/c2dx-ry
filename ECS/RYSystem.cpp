@@ -27,6 +27,7 @@ void System::update(double dt) {
     for (auto it = _components.rbegin(); it != _components.rend(); ++it) {
         auto cmp = *it;
         if (cmp->_needDestroy) {
+            cmp->_entity->_cmpMap.erase(cmp->_identifier);
             cmp->release();
             _components.erase(it.base());
         }

@@ -46,30 +46,70 @@ static __TYPE__* create() \
     } \
 }
 
-RY_NAMESPACE_BEGIN
+#define RY_REF_EXIST(REF) isRefExist(REF)
+#define RY_UTIL RY_NAMESPACE::Util
 
+
+RY_NAMESPACE_BEGIN
 
 struct Util {
     
 public:
     
-    template<class K, class V>
-    static bool mapHasValue(std::map<K, V>& map, K key);
+    template<typename K, typename V>
+    static bool mapHasValue(std::map<K, V>& map, K key) {
+        
+        auto it = map.find(key);
+        if (it != map.end()) {
+            return true;
+        };
+        return false;
+    };
     
-    template<class K, class V>
-    static V mapGetValueSafe(std::map<K, V>& map, K key);
+    template<typename K, typename V>
+    static V mapGetValueSafe(std::map<K, V>& map, K key) {
+        
+        V p = nullptr;
+        auto it = map.find(key);
+        if (it != map.end()) {
+            p = it->second;
+        }
+        return p;
+    }
     
-    template<class K, class V>
-    static std::vector<K> mapGetAllKeys(std::map<K, V>& map);
+    template<typename K, typename V>
+    static V mapGetValueSafe(std::unordered_map<K, V>& map, K key) {
+        
+        V p = nullptr;
+        auto it = map.find(key);
+        if (it != map.end()) {
+            p = it->second;
+        }
+        return p;
+    }
     
-    template<class K, class V>
-    static std::vector<V> mapGetAllValues(std::map<K, V>& map);
+    template<typename K, typename V>
+    static std::vector<K> mapGetAllKeys(std::map<K, V>& map) {
+        
+        std::vector<K> list;
+        for (auto vk : map) {
+            list.push_back(vk->first);
+        }
+        return list;
+    };
+    
+    template<typename K, typename V>
+    static std::vector<V> mapGetAllValues(std::map<K, V>& map) {
+        
+        std::vector<K> list;
+        for (auto vk : map) {
+            list.push_back(vk->second);
+        }
+        return list;
+    };
     
 };
 
 RY_NAMESPACE_END
-
-#define RY_REF_EXIST(REF) isRefExist(REF)
-#define RY_UTIL RY_NAMESPACE::Util
 
 #endif /* c2d_ry_util_h */

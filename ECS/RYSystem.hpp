@@ -13,6 +13,7 @@
 
 
 #define RY_CREATE_SYSTEM_FUNC(__SYSCLS__, __CMPCLS__) \
+public: constexpr static const char* CMPName = #__CMPCLS__;\
 static __SYSCLS__* create() \
 { \
     __CMPCLS__ *cmp; \
@@ -20,9 +21,7 @@ static __SYSCLS__* create() \
     __SYSCLS__ *pRet = new(std::nothrow) __SYSCLS__(); \
     if (pRet) \
     {\
-        pRet->setTypeName(#__SYSCLS__);\
-        pRet->_componentTypeName = #__CMPCLS__;\
-        pRet->autorelease();\
+        pRet->_componentTypeName = __SYSCLS__::CMPName;\
         return pRet; \
     } \
     else \
@@ -35,7 +34,7 @@ static __SYSCLS__* create() \
 
 RY_NAMESPACE_BEGIN
 
-class System: public cocos2d::Ref {
+class System {
     
 public:
     
@@ -43,12 +42,12 @@ public:
     
     virtual void update(double dt);
     
-    
+    ~System();
+
 protected:
     
-    ~System();
+    const char* _componentTypeName;
     
-    std::string _componentTypeName;
     std::vector<Component *> _components;
 };
 

@@ -11,23 +11,17 @@ RY_NAMESPACE_BEGIN
 
 void Entity::addComponent(Component *cmp, ComponentId identifier) {
     
-    std::string name(identifier);
-    RY_ASSERT(!RY_MAP_HAS_VALUE(_cmpMap, name), "same cmp exist");
+    RY_ASSERT(!RY_MAP_HAS_VALUE(_cmpMap, identifier), "same cmp exist");
     RY_ASSERT(cmp->_entity == nullptr, "cmp entity isn't null");
-    _cmpMap[name] = cmp;
-    cmp->_identifier = name;
+    
+    _cmpMap[identifier] = cmp;
+    cmp->_identifier = identifier;
     cmp->setEntity(this);
 };
 
 Component *Entity::component(ComponentId identifier) {
-    
-    auto res = _cmpMap.find(identifier);
-    if (res != _cmpMap.end()) {
-        auto value = res->second;
-        RY_ASSERT(RY_REF_EXIST(value), "WTF")
-        return value;
-    }
-    return nullptr;
+    auto cmp = RY_UTIL::mapGetValueSafe(_cmpMap, identifier);
+    return cmp;
 };
 
 RY_NAMESPACE_END

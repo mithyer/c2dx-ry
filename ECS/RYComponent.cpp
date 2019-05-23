@@ -34,7 +34,7 @@ Entity *Component::getEntity() {
 };
 
 
-const std::string& Component::getIdentifier() const {
+ComponentId Component::getIdentifier() const {
     return _identifier;
 }
 

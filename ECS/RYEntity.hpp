@@ -11,6 +11,8 @@
 #include "RYComponent.hpp"
 
 
+#define RY_COMPONENT_ID_DECLARE(__ENT__, __ID__)  public: constexpr static ComponentId __ID__ = #__ENT__"_CID_"#__ID__;
+
 RY_NAMESPACE_BEGIN
 
 class System;
@@ -28,8 +30,7 @@ public:
     
 protected:
     
-    std::map<std::string, Component*> _cmpMap;
-    
+    std::unordered_map<ComponentId, Component*> _cmpMap;
 
 };
 
