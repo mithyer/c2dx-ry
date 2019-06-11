@@ -48,7 +48,7 @@ static __TYPE__* create() \
 
 #define RY_REF_EXIST(REF) isRefExist(REF)
 #define RY_UTIL RY_NAMESPACE::Util
-
+#define RYLOG CCLOG
 
 RY_NAMESPACE_BEGIN
 
