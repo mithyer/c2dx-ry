@@ -20,9 +20,11 @@
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define RY_ASSERT(CON, MSG)
 #define RY_ASSERT_FAILURE(MSG)
+#define RYLOG(format, ...)
 #else
 #define RY_ASSERT(CON, MSG) if (!(CON)) {cocos2d::log(MSG);assert(0);};
 #define RY_ASSERT_FAILURE(MSG) cocos2d::log(MSG);assert(0);
+#define RYLOG(format, ...) cocos2d::log("============>\nLOG:"#format"\nFILE: %s\nLINE: %d\n<============", ##__VA_ARGS__, __FILE__, __LINE__)
 #endif
 
 #define STR_EXPAND(tok) #tok
@@ -48,7 +50,6 @@ static __TYPE__* create() \
 
 #define RY_REF_EXIST(REF) isRefExist(REF)
 #define RY_UTIL RY_NAMESPACE::Util
-#define RYLOG CCLOG
 
 RY_NAMESPACE_BEGIN
 
