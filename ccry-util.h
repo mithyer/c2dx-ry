@@ -18,13 +18,21 @@
 #define RY_USING_NAMESPACE using namespace RY_NAMESPACE
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define RY_ASSERT(CON, MSG)
-#define RY_ASSERT_FAILURE(MSG)
 #define RYLOG(format, ...)
+#define RY_ASSERT(CON, MSG)
+#define RY_ASSERT_WTF(CON)
+#define RY_ASSERT_FAILURE(MSG)
+#define RY_ASSERT_FAILURE_WTF()
+#define RY_ASSERT_BLOCK(REF, BLOCK, MSG)
+#define RY_ASSERT_BLOCK_WTF(REF, BLOCK, MSG)
 #else
-#define RY_ASSERT(CON, MSG) if (!(CON)) {cocos2d::log(MSG);assert(0);};
-#define RY_ASSERT_FAILURE(MSG) cocos2d::log(MSG);assert(0);
-#define RYLOG(format, ...) cocos2d::log("============>\nLOG:"#format"\nFILE: %s\nLINE: %d\n<============", ##__VA_ARGS__, __FILE__, __LINE__)
+#define RYLOG(format, ...) cocos2d::log("============>\nLOG:"#format"\nFILE: %s\nLINE: %d\n<============", ##__VA_ARGS__, __FILE__, __LINE__);
+#define RY_ASSERT(CON, MSG) if (!(CON)) {RYLOG(MSG);assert(0);};
+#define RY_ASSERT_WTF(CON) RY_ASSERT(CON, "WTF!!!!");
+#define RY_ASSERT_FAILURE(MSG) RY_ASSERT(false, MSG);
+#define RY_ASSERT_FAILURE_WTF() RY_ASSERT_WTF(false);
+#define RY_ASSERT_BLOCK(REF, BLOCK, MSG) RY_ASSERT(((std::function<bool()>)[REF]{BLOCK}), MSG);
+#define RY_ASSERT_BLOCK_WTF(REF, BLOCK) RY_ASSERT_WTF(((std::function<bool()>)[REF]{BLOCK}));
 #endif
 
 #define STR_EXPAND(tok) #tok
