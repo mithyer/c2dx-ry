@@ -42,7 +42,7 @@ public:
     
     virtual void update(double dt);
     
-    ~System();
+    virtual ~System();
 
 protected:
     
