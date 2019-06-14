@@ -56,7 +56,7 @@ static __TYPE__* create() \
     } \
 }
 
-#define RY_REF_EXIST(REF) isRefExist(REF)
+#define RY_REF_EXIST(REF) IsRefExist(REF)
 #define RY_UTIL RY_NAMESPACE::Util
 
 RY_NAMESPACE_BEGIN
