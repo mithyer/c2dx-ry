@@ -38,4 +38,8 @@ ComponentId Component::getIdentifier() const {
     return _identifier;
 }
 
+void Component::setNeedDestroy() {
+    _needDestroy = true;
+}
+
 RY_NAMESPACE_END

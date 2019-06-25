@@ -29,6 +29,8 @@ public:
     
     CC_PROPERTY_READONLY(ComponentId, _identifier, Identifier);
     
+    virtual void setNeedDestroy();
+    
 protected:
     
     Component();

@@ -38,17 +38,24 @@ class System {
     
 public:
     
-    virtual void addComponentsInEntity(Entity *entity);
-    
+    virtual const std::vector<Component *>& addComponentsInEntity(Entity *entity);
+
     virtual void update(double dt);
     
     virtual ~System();
 
 protected:
     
+    virtual const std::vector<Component *>& checkIfComponentsNeedDestroy();
+    
     const char* _componentTypeName;
     
     std::vector<Component *> _components;
+    
+    std::vector<Component *> _componentsAdded;
+    
+    std::vector<Component *> _componentsWillDestroy;
+
 };
 
 RY_NAMESPACE_END
