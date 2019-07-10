@@ -15,8 +15,8 @@ const std::vector<Component *>& System::addComponentsInEntity(Entity *entity) {
     for (auto pair : entity->_cmpMap) {
         auto cmp = pair.second;
         if (cmp->getTypeName() == _componentTypeName) {
-            if (std::find(_components.begin(), _components.end(), cmp) == _components.end()) {
-                _components.push_back(cmp);
+            auto res = _components.insert(cmp);
+            if (res.second) {
                 cmp->retain();
                 _componentsAdded.push_back(cmp);
             }
@@ -27,12 +27,13 @@ const std::vector<Component *>& System::addComponentsInEntity(Entity *entity) {
 
 const std::vector<Component *>& System::checkIfComponentsNeedDestroy() {
     _componentsWillDestroy.clear();
-    for (auto it = _components.rbegin(); it != _components.rend(); ++it) {
+    auto cmps = _components;
+    for (auto it = cmps.begin(); it != cmps.end(); ++it) {
         auto cmp = *it;
         if (cmp->_needDestroy) {
             cmp->_entity->_cmpMap.erase(cmp->_identifier);
             cmp->release();
-            _components.erase(it.base());
+            _components.erase(cmp);
             _componentsWillDestroy.push_back(cmp);
         }
     }
@@ -43,11 +44,15 @@ void System::update(double dt) {
     checkIfComponentsNeedDestroy();
 }
 
-System::~System() {
+void System::removeAllComponents() {
     for (auto cmp : _components) {
         cmp->release();
     }
     _components.clear();
+}
+
+System::~System() {
+    removeAllComponents();
 }
 
 

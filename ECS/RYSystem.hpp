@@ -10,7 +10,7 @@
 
 #include "RYEntity.hpp"
 #include "RYComponent.hpp"
-
+#include <unordered_set>
 
 #define RY_CREATE_SYSTEM_FUNC(__SYSCLS__, __CMPCLS__) \
 public: constexpr static const char* CMPName = #__CMPCLS__;\
@@ -34,6 +34,7 @@ static __SYSCLS__* create() \
 
 RY_NAMESPACE_BEGIN
 
+
 class System {
     
 public:
@@ -43,6 +44,8 @@ public:
     virtual void update(double dt);
     
     virtual ~System();
+    
+    virtual void removeAllComponents();
 
 protected:
     
@@ -50,12 +53,18 @@ protected:
     
     const char* _componentTypeName;
     
-    std::vector<Component *> _components;
+    std::unordered_set<Component *> _components;
     
     std::vector<Component *> _componentsAdded;
     
     std::vector<Component *> _componentsWillDestroy;
 
+};
+
+struct PointedObEq {
+    bool operator()(Component const * lhs, Component const * rhs) const {
+        return lhs == rhs;
+    }
 };
 
 RY_NAMESPACE_END

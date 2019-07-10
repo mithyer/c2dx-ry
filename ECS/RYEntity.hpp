@@ -11,7 +11,7 @@
 #include "RYComponent.hpp"
 
 
-#define RY_COMPONENT_ID_DECLARE(__ENT__, __ID__)  public: constexpr static ComponentId __ID__ = #__ENT__"_CID_"#__ID__;
+#define RY_COMPONENT_ID_DECLARE(__ENT__, __ID__)  public: constexpr static ccry::ComponentId __ID__ = "CID_"#__ENT__"_"#__ID__;
 
 RY_NAMESPACE_BEGIN
 
